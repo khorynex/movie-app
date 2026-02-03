@@ -5,7 +5,7 @@ import React from 'react'
 import { useState, useEffect } from 'react'
 import { useDebounce } from 'react-use'
 
-const API_BASE_URL = 'https://api.themoviedb.org/4'
+const API_BASE_URL = 'https://api.themoviedb.org/3'
 const API_KEY = "eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiI2NzczZGMyZjNmMjMwMTI3NjY0MDgxYWQ2MDFiMzI2YSIsIm5iZiI6MTc3MDExNDY0Ni42MzIsInN1YiI6IjY5ODFjZTU2OWQ4NjFmMDlhZDRjOTY5ZiIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.z8OkKFXUNoQjc4iFlsQgRLOrjXrfrCPYJ5vZlX0oNf8"
 
 const API_OPTIONS = {
@@ -30,9 +30,8 @@ const App = () => {
     setErrorMessage('')
 
     try {
-      const endpoint = query
-        ? `${API_BASE_URL}/search/movie?query=${encodeURIComponent(query)}`
-        : `${API_BASE_URL}/discover/movie?sort_by=popularity_desc`
+      const endpoint = query ?  `${API_BASE_URL}/search/movie?query=${encodeURIComponent(query)}`
+                              : `${API_BASE_URL}/discover/movie?sort_by=popularity_desc`
 
       const response = await fetch(endpoint, API_OPTIONS)
 
