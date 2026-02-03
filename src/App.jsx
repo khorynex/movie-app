@@ -6,7 +6,7 @@ import {useState, useEffect} from 'react'
 import {useDebounce} from 'react-use'
 
 const API_BASE_URL = 'https://api.themoviedb.org/3'
-const API_KEY = import.meta.env.VITE_TMDB_API_KEY
+const API_KEY = "eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiI2NzczZGMyZjNmMjMwMTI3NjY0MDgxYWQ2MDFiMzI2YSIsIm5iZiI6MTc3MDExNDY0Ni42MzIsInN1YiI6IjY5ODFjZTU2OWQ4NjFmMDlhZDRjOTY5ZiIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.z8OkKFXUNoQjc4iFlsQgRLOrjXrfrCPYJ5vZlX0oNf8"
 
 const API_OPTIONS = {
   method: "GET",
@@ -43,7 +43,6 @@ const App = () => {
         return
       }
       setMovieList(data.results || [])
-      console.log( data )
 
     } catch (error) {
       console.error( `Error fetching movies: ${error}`)
