@@ -1,0 +1,155 @@
+@import "tailwindcss";
+
+@font-face {
+  font-family: "Montserrat Bold";
+  src: url(fonts/Montserrat-Bold.ttf)
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  height: fit-content;
+}
+
+body {
+  background-image: url(./hero-bg.png);
+  /* background-size: cover; */
+  background-position: top center;
+  background-size: 100% auto;
+  background-repeat: no-repeat;
+  background-color: #030013;
+  color: white;
+  text-align: center;
+  display: flex;
+  justify-content: center;
+  min-height: 100vh;
+}
+
+header {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+h1 {
+  font-family: "Montserrat Bold";
+  font-size: 48px;
+}
+
+h2 {
+  font-family: "Montserrat Bold";
+  font-size: 24px;
+}
+
+/* .text-gradient {
+  background: linear-gradient(90deg, white, white, rgb(74, 51, 127));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+} */
+
+.hero-img {
+  width: 500px;
+  margin-top: 50px;
+}
+
+.search {
+  width: 1000px;
+}
+
+.search-input {
+  display: flex;
+  background-color: #3131548c;
+  border-radius: 10px;
+  padding: 10px;
+  margin-top: 25px;
+}
+
+.search-input-field {
+  padding: 0 20px;
+  width: 100%;
+}
+
+.search-input-field:focus {
+  outline: none;
+}
+
+.search-icon {
+  width: 25px;
+  height: 25px;
+}
+
+.all-movies {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin: 20px;
+}
+/* 
+.movie-list {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+} */
+
+.movie-list {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 25px;
+  width: 100%;
+  max-width: 1400px;
+  margin-top: 20px;
+}
+
+/* 3 columns */
+@media (max-width: 1200px) {
+  .movie-list {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+/* 2 columns */
+@media (max-width: 900px) {
+  .movie-list {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+/* 1 column */
+@media (max-width: 600px) {
+  .movie-list {
+    grid-template-columns: repeat(1, 1fr);
+  }
+}
+
+
+
+.movie-card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background-color: #3131548c;
+  width: fit-content;
+  height: 500px;
+  padding: 25px;
+  margin: 10px;
+  border-radius: 15px;
+  gap: 10px;
+}
+
+.movie-card-img {
+  width: 250px;
+  border-radius: 10px;
+}
+
+.movie-card-info {
+  width: 100%;
+}
+
+.rating {
+  margin-top: 10px;
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+  align-items: center;
+}
