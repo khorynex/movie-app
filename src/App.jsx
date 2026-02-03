@@ -2,10 +2,10 @@ import Search from './components/Search'
 import Spinner from './components/Spinner'
 import MovieCard from './components/MovieCard'
 import React from 'react'
-import { useState, useEffect } from 'react'
-import { useDebounce } from 'react-use'
+import {useState, useEffect} from 'react'
+import {useDebounce} from 'react-use'
 
-const API_BASE_URL = 'https://api.themoviedb.org/4'
+const API_BASE_URL = 'https://api.themoviedb.org/3/'
 const API_KEY = "eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiI2NzczZGMyZjNmMjMwMTI3NjY0MDgxYWQ2MDFiMzI2YSIsIm5iZiI6MTc3MDExNDY0Ni42MzIsInN1YiI6IjY5ODFjZTU2OWQ4NjFmMDlhZDRjOTY5ZiIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.z8OkKFXUNoQjc4iFlsQgRLOrjXrfrCPYJ5vZlX0oNf8"
 
 const API_OPTIONS = {
@@ -21,36 +21,40 @@ const App = () => {
   const [errorMessage, setErrorMessage] = useState('')
   const [movieList, setMovieList] = useState([])
   const [isLoading, setIsLoading] = useState(false)
-  const [debouncedSearchTerm, setDebouncedSearchTerm] = useState('')
+  const [debouncedSearchTerm, setDebouncedSearchTerm] = useState( '' )
 
-  useDebounce(() => setDebouncedSearchTerm(searchTerm), 500, [searchTerm])
+  useDebounce( () => setDebouncedSearchTerm(searchTerm), 500, [searchTerm])
 
-  const fetchMovies = async (query = '') => {
-    setIsLoading(true)
-    setErrorMessage('')
-
+  const fetchMovies = async ( query = '' ) => {
+    setIsLoading( true )
+    setErrorMessage( '' )
     try {
-      const endpoint = query
-        ? `${API_BASE_URL}/search/movie?query=${encodeURIComponent(query)}`
-        : `${API_BASE_URL}/discover/movie?sort_by=popularity_desc`
+      const endpoint = query ?  `${API_BASE_URL}/search/movie?query=${encodeURIComponent(query)}`
+                              : `${API_BASE_URL}/discover/movie?sort_by=popularity_desc`
+      const response = await fetch( endpoint, API_OPTIONS )
 
-      const response = await fetch(endpoint, API_OPTIONS)
-
-      if (!response.ok) throw new Error("response not ok")
+      if( !response.ok )
+        throw new Error( "response not ok")
 
       const data = await response.json()
+      if( data.Response === 'False'){
+        setErrorMessage( data.Error || `Failed to fetch`)
+        setMovieList( [] )
+        return
+      }
       setMovieList(data.results || [])
+      console.log( data )
 
     } catch (error) {
-      console.error(`Error fetching movies: ${error}`)
-      setErrorMessage(`Error fetching movies. Please try again later.`)
+      console.error( `Error fetching movies: ${error}`)
+      setErrorMessage( `Error fetching movies. Please try again later` )
     } finally {
-      setIsLoading(false)
+      setIsLoading( false )
     }
   }
 
-  useEffect(() => {
-    fetchMovies(debouncedSearchTerm)
+  useEffect( () => {
+    fetchMovies( debouncedSearchTerm )
   }, [debouncedSearchTerm])
 
   return (
@@ -60,28 +64,24 @@ const App = () => {
       <div className="wrapper">
         <header>
           <img src="./hero.png" alt="Hero Banner" className="hero-img" />
-          <h1>
-            Find <span className="text-gradient">Movies</span> You'll Enjoy <br />
-            Without the Hassle
-          </h1>
-          <Search searchTerm={searchTerm} setSearchTerm={setSearchTerm} />
+          <h1>Find <span className="text-gradient">Movies</span> You'll Enjoy <br />Without the Hassle</h1>
+          <Search searchTerm={searchTerm} setSearchTerm={setSearchTerm}/>
         </header>
 
         <section className="all-movies">
           <h2>All Movies</h2>
 
-          {isLoading ? (
-            <Spinner />
-          ) : errorMessage ? (
-            <p className="text-red-500">{errorMessage}</p>
-          ) : (
-            <ul className="movie-list">
-              {movieList.map((movie) => (
-                <MovieCard key={movie.id} movie={movie} />
-              ))}
-            </ul>
-          )}
+          {isLoading ? ( <Spinner /> ) : errorMessage ? ( <p className="text-red-500">{errorMessage}</p>) :
+            (
+              <ul className="movie-list">
+                {movieList.map( (movie) => (
+                  <MovieCard key={movie.id} movie={movie} />
+                ))}
+              </ul>
+            )
+          }
         </section>
+
       </div>
     </main>
   )
